@@ -17,7 +17,7 @@ public class KingManager : NetworkBehaviour
             kingClientId.Value = NetworkManager.Singleton.LocalClientId; 
         }
     }
-    [ServerRpc]
+    [Rpc(SendTo.Server)]
     public void RequestKingTransferServerRpc(ulong newKingId)
     {
         if (!IsServer) return;

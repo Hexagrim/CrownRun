@@ -643,7 +643,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Balance
   targetRotation: 0
-  force: 200
+  force: 300
 --- !u!212 &2964204654109490752
 SpriteRenderer:
   serializedVersion: 2
@@ -713,7 +713,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fe3ef9759bd16a0429562964be0551b0, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 59
@@ -1315,7 +1315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 519922902
+  GlobalObjectIdHash: 959161616
   InScenePlacedSourceGlobalObjectIdHash: 959161616
   DeferredDespawnTick: 0
   Ownership: 1
@@ -1399,10 +1399,10 @@ MonoBehaviour:
   rightLeg: {fileID: 3599264684962988013}
   rb: {fileID: 4532990270832798484}
   Anim: {fileID: 2027959210570521601}
-  speed: 4
+  speed: 2
   stepWait: 0.4
-  jumpForce: 8500
-  positionRadius: 0.15
+  jumpForce: 9000
+  positionRadius: 0.2
   ground:
     serializedVersion: 2
     m_Bits: 8
@@ -1955,7 +1955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Balance
   targetRotation: 0
-  force: 200
+  force: 300
 --- !u!212 &3719349789115051359
 SpriteRenderer:
   serializedVersion: 2
@@ -2025,7 +2025,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fe3ef9759bd16a0429562964be0551b0, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 59
@@ -2202,7 +2202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Balance
   targetRotation: 0
-  force: 2000
+  force: 300
 --- !u!212 &7721247101269664048
 SpriteRenderer:
   serializedVersion: 2
@@ -2272,7 +2272,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fe3ef9759bd16a0429562964be0551b0, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 59
@@ -2348,10 +2348,10 @@ HingeJoint2D:
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
-  m_UseLimits: 0
+  m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 0
-    m_UpperAngle: 359
+    m_LowerAngle: 80
+    m_UpperAngle: -90
 --- !u!114 &8788643476954062075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3223,7 +3223,7 @@ HingeJoint2D:
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
-  m_UseLimits: 0
+  m_UseLimits: 1
   m_AngleLimits:
     m_LowerAngle: 0
     m_UpperAngle: 359
@@ -3457,7 +3457,7 @@ HingeJoint2D:
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: -180
+    m_LowerAngle: -90
     m_UpperAngle: 0
 --- !u!114 &3142708668724790136
 MonoBehaviour:
@@ -3744,6 +3744,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6591308432422359587}
   - component: {fileID: 5876642257772397073}
+  - component: {fileID: 75791086995449872}
   m_Layer: 2
   m_Name: MainCollider
   m_TagString: PlayerCol
@@ -3800,9 +3801,22 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.005717762, y: -0.23888034}
-  m_Size: {x: 3.1974752, y: 2.4975967}
+  m_Offset: {x: -0.0334871, y: 0.043887038}
+  m_Size: {x: 2.8054361, y: 1.9320647}
   m_Direction: 0
+--- !u!114 &75791086995449872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7979539587204789562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ddd6bd022f71804d9f7a9b5e6d9aaf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &7993565827303935514
 GameObject:
   m_ObjectHideFlags: 0
@@ -4299,7 +4313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Balance
   targetRotation: 0
-  force: 2000
+  force: 300
 --- !u!212 &4175620184093223469
 SpriteRenderer:
   serializedVersion: 2
@@ -4369,7 +4383,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: fe3ef9759bd16a0429562964be0551b0, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 59
@@ -4445,10 +4459,10 @@ HingeJoint2D:
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
-  m_UseLimits: 0
+  m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 0
-    m_UpperAngle: 359
+    m_LowerAngle: 80
+    m_UpperAngle: -90
 --- !u!114 &1036378991604347200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4927,7 +4941,7 @@ HingeJoint2D:
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 180
+    m_LowerAngle: 90
     m_UpperAngle: 0
 --- !u!114 &300257543858087181
 MonoBehaviour:

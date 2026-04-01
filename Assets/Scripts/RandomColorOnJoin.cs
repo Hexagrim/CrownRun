@@ -46,7 +46,10 @@ public class RandomColorOnJoin : NetworkBehaviour
     {
         foreach (SpriteRenderer sr in sprites)
         {
-            sr.color = color;
+            if (sr.gameObject.CompareTag("Player"))
+            {
+                sr.color = color;
+            }
         }
     }
 

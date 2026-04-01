@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - Indicator
+  - Outline
+  - PlayerCol
+  - Crown
   layers:
   - Default
   - TransparentFX
@@ -41,6 +44,12 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Outline
+    uniqueID: 3073484583
+    locked: 0
+  - name: Player
+    uniqueID: 1530424689
     locked: 0
   m_RenderingLayers:
   - Default

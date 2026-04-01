@@ -19,6 +19,8 @@ public class Movement : NetworkBehaviour
     public LayerMask ground;
     public Transform playerPos;
     private GameObject Camera;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,8 +34,17 @@ public class Movement : NetworkBehaviour
 
         if (!IsOwner)
         {
-
+            FindChildWithTag("Indicator").gameObject.SetActive(false);
         }
+    }
+    Transform FindChildWithTag(string tag)
+    {
+        foreach (Transform t in GetComponentsInChildren<Transform>())
+        {
+            if (t.CompareTag(tag))
+                return t;
+        }
+        return null;
     }
     // Update is called once per frame
     void Update()

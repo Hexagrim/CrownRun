@@ -5,7 +5,9 @@ using UnityEngine.UIElements;
 
 public class KingManager : NetworkBehaviour
 {
-    public GameObject Particle;
+
+    //public NetworkVariable<Color> ParticleColor = new NetworkVariable<Color>();
+    //public GameObject Particle;
     public NetworkVariable<ulong> kingClientId = new NetworkVariable<ulong>();
     bool initialized;
     private bool transferInProgress = false;
@@ -21,12 +23,35 @@ public class KingManager : NetworkBehaviour
     }
     public override void OnNetworkSpawn()
     {
+        // ApplyColor();
+        // ParticleColor.OnValueChanged += OnColorChanged;
         if (IsServer)
         {
+
             Debug.Log("Server LocalClientId: " + NetworkManager.Singleton.LocalClientId);
-            kingClientId.Value = NetworkManager.Singleton.LocalClientId; 
+            kingClientId.Value = NetworkManager.Singleton.LocalClientId;
         }
     }
+
+
+
+    public override void OnNetworkDespawn()
+    {
+        // ParticleColor.OnValueChanged -= OnColorChanged;
+    }
+
+    // void OnColorChanged(Color previous, Color current)
+    // {
+    //     ApplyColor();
+    // }
+
+    // void ApplyColor()
+    // {
+    //     var ps = GetComponent<ParticleSystem>();
+    //     var main = ps.main;
+    //     main.startColor = ParticleColor.Value;
+    // }
+
     [Rpc(SendTo.Server)]
     public void RequestKingTransferServerRpc(ulong newKingId)
     {
@@ -61,44 +86,30 @@ public class KingManager : NetworkBehaviour
             }
         }
     }
-    [Rpc(SendTo.Server)]
-    public void SpawnParticlesRpc(Vector2 Pos , Color col)
-    {
-        GameObject obj = Instantiate(Particle, Pos, Quaternion.identity);
 
-        var netObj = obj.GetComponent<NetworkObject>();
-
-        netObj.Spawn();
-
-        ApplyParticleColorClientRpc(netObj.NetworkObjectId, col);
-
-        StartCoroutine(DestroyObj(1, netObj));
-
-
-    }
-    public IEnumerator DestroyObj(float t,NetworkObject obj)
-    {
-        yield return new WaitForSeconds(t);
-        obj.Despawn();
-    }
-    [Rpc(SendTo.ClientsAndHost)]
-    void ApplyParticleColorClientRpc(ulong netObjectId, Color col)
-    {
-        StartCoroutine(ApplyWhenReady(netObjectId, col));
-    }
-
-    IEnumerator ApplyWhenReady(ulong netObjectId, Color col)
-    {
-        NetworkObject netObj;
-
-        while (!NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(netObjectId, out netObj))
-        {
-            yield return null;
-        }
-
-        var ps = netObj.GetComponent<ParticleSystem>();
-        var main = ps.main;
-        main.startColor = col;
-    }
+    //[Rpc(SendTo.Server)]
+    //public void SpawnParticlesRpc(Vector2 Pos, Color col)
+    //{
+    //    GameObject obj = Instantiate(Particle, Pos, Quaternion.identity);
+    //
+    //    var netObj = obj.GetComponent<NetworkObject>();
+    //
+    //    // ParticleColor.Value = col;
+    //
+    //    netObj.Spawn();
+    //
+    //    StartCoroutine(DestroyObj(1f, netObj));
+    //}
+    //
+    //public IEnumerator DestroyObj(float t, NetworkObject obj)
+    //{
+    //    yield return new WaitForSeconds(t);
+    //    obj.Despawn();
+    //}
 
 }
+
+
+
+
+//whatcu looking at bruh

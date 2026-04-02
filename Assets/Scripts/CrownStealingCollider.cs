@@ -26,10 +26,10 @@ public class CrownStealingCollider : NetworkBehaviour
             if (kingManager != null && netObj != null)
             {
                 kingManager.RequestKingTransferServerRpc(netObj.OwnerClientId);
-                Transform root = transform.root;
-                Transform head = root.Find("Head");
+                //Transform root = transform.root;
+                //Transform head = root.Find("Head");
 
-                if(kingManager.kingClientId.Value == OwnerClientId) kingManager.SpawnParticlesRpc(head.position, head.GetComponent<SpriteRenderer>().color);
+                //if(kingManager.kingClientId.Value == OwnerClientId) kingManager.SpawnParticlesRpc(head.position, head.GetComponent<SpriteRenderer>().color);
             }
 
         }

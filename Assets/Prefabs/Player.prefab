@@ -1342,13 +1342,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RandomColorOnJoin
   ShowTopMostFoldoutHeaderGroup: 1
-  playerColor:
+  availableColors:
+  - name: Red
+    color: {r: 1, g: 0.21377724, b: 0.21377724, a: 1}
+  - name: Blue
+    color: {r: 0.16251343, g: 0.16484621, b: 1, a: 1}
+  - name: Green
+    color: {r: 0.18571238, g: 1, b: 0.1283375, a: 0}
+  - name: Yellow
+    color: {r: 1, g: 0.97657675, b: 0.119793594, a: 1}
+  - name: Purple
+    color: {r: 0.98779523, g: 0.17105734, b: 1, a: 1}
+  colorIndex:
     UpdateTraits:
       MinSecondsBetweenUpdates: 0
       MaxSecondsBetweenUpdates: 0
-    m_InternalValue:
-      serializedVersion: 2
-      rgba: 0
+    m_InternalValue: -1
 --- !u!114 &5874990376853533677
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -43,6 +43,7 @@ public class KingManager : NetworkBehaviour
     private IEnumerator TransferAfterDelay()
     {
         kingClientId.Value = pendingKingId;
+        
         yield return new WaitForSeconds(1f);
         transferInProgress = false;
     }

@@ -1,16 +1,25 @@
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
 public class RandomColorOnJoin : NetworkBehaviour
 {
+    [System.Serializable]
+    public struct NamedColor
+    {
+        public string name;
+        public Color color;
+    }
+    [Header("give five colours here")]
+    public NamedColor[] availableColors;
     private SpriteRenderer[] sprites;
-
-    // Synced color (owner writes, everyone reads)
-    public NetworkVariable<Color32> playerColor = new NetworkVariable<Color32>(
-        default,
+    public NetworkVariable<int> colorIndex = new NetworkVariable<int>(
+        -1,
         NetworkVariableReadPermission.Everyone,
-        NetworkVariableWritePermission.Owner
+        NetworkVariableWritePermission.Server
     );
+
+    private static HashSet<int> usedIndices = new HashSet<int>();
 
     private void Awake()
     {
@@ -19,31 +28,59 @@ public class RandomColorOnJoin : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        // Owner picks color ONCE
-        if (IsOwner)
-        {
-            Color32 color = GetRandomVibrantColor();
+        colorIndex.OnValueChanged += OnColorChanged;
 
-            ApplyColor(color);          // instant local feedback
-            playerColor.Value = color;  // sync to others
+        if (IsServer)
+        {
+            AssignColorServerSide();
+        }
+        if (colorIndex.Value != -1)
+        {
+            ApplyColor(colorIndex.Value);
+        }
+    }
+
+    new private void OnDestroy()
+    {
+        colorIndex.OnValueChanged -= OnColorChanged;
+    }
+
+    private void OnColorChanged(int oldIndex, int newIndex)
+    {
+        ApplyColor(newIndex);
+    }
+
+    private void AssignColorServerSide()
+    {
+        List<int> availableIndices = new List<int>();
+
+        for (int i = 0; i < availableColors.Length; i++)
+        {
+            if (!usedIndices.Contains(i))
+                availableIndices.Add(i);
+        }
+
+        int chosenIndex;
+
+        if (availableIndices.Count > 0)
+        {
+            chosenIndex = availableIndices[Random.Range(0, availableIndices.Count)];
         }
         else
         {
-            // Non-owners apply whatever value is already set
-            ApplyColor(playerColor.Value);
+            chosenIndex = Random.Range(0, availableColors.Length);
         }
 
-        // Listen for updates (for everyone)
-        playerColor.OnValueChanged += OnColorChanged;
+        usedIndices.Add(chosenIndex);
+        colorIndex.Value = chosenIndex;
     }
 
-    private void OnColorChanged(Color32 oldColor, Color32 newColor)
+    private void ApplyColor(int index)
     {
-        ApplyColor(newColor);
-    }
+        if (index < 0 || index >= availableColors.Length) return;
 
-    private void ApplyColor(Color32 color)
-    {
+        Color color = availableColors[index].color;
+
         foreach (SpriteRenderer sr in sprites)
         {
             if (sr.gameObject.CompareTag("Player"))
@@ -53,20 +90,24 @@ public class RandomColorOnJoin : NetworkBehaviour
         }
     }
 
-    private Color32 GetRandomVibrantColor()
+
+    public string GetColorName()
     {
-        float hue = Random.value;
+        int index = colorIndex.Value;
 
-        float saturation = Mathf.Clamp01(0.9f + Random.value * 0.1f);
-        float value = Mathf.Clamp01(0.9f + Random.value * 0.1f);
+        if (index < 0 || index >= availableColors.Length)
+            return "Unknown";
 
-        Color color = Color.HSVToRGB(hue, saturation, value);
+        return availableColors[index].name;
+    }
 
-        return new Color32(
-            (byte)(color.r * 255),
-            (byte)(color.g * 255),
-            (byte)(color.b * 255),
-            255
-        );
+    public Color GetColor()
+    {
+        int index = colorIndex.Value;
+
+        if (index < 0 || index >= availableColors.Length)
+            return Color.white;
+
+        return availableColors[index].color;
     }
 }

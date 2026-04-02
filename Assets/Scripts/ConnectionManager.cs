@@ -4,28 +4,43 @@ using UnityEngine.SceneManagement;
 
 public class ConnectionHandler : MonoBehaviour
 {
+    public bool canJoin = true; 
+
     private void Awake()
     {
-        // Only server/host should handle approval
-        if (NetworkManager.Singleton.IsServer)
+        NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
+    }
+    private void Update()
+    {
+        if (!NetworkManager.Singleton.IsServer) return;
+
+        if(SceneManager.GetActiveScene().name != "Lobby" )
         {
-            NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
+            canJoin = false;
+        }
+        else
+        {
+            canJoin = true;
         }
     }
-
     private void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request,
                                NetworkManager.ConnectionApprovalResponse response)
     {
-        string sceneName = SceneManager.GetActiveScene().name;
+        if (!NetworkManager.Singleton.IsServer)
+            return;
 
-        if (sceneName != "Lobby")
+        if (!canJoin)
         {
             response.Approved = false;
-            response.Reason = "Match already started";
+            response.Reason = "Server is not accepting players right now.";
             return;
         }
 
+
+        // APPROVE
         response.Approved = true;
         response.CreatePlayerObject = true;
+        response.Position = Vector3.zero;
+        response.Rotation = Quaternion.identity;
     }
 }

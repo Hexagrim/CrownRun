@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Cinemachine;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -35,6 +36,7 @@ public class Movement : NetworkBehaviour
         if (!IsOwner)
         {
             FindChildWithTag("Indicator").gameObject.SetActive(false);
+            FindChildWithTag("Cam").gameObject.GetComponent<CinemachineCamera>().enabled = false;
         }
     }
     Transform FindChildWithTag(string tag)

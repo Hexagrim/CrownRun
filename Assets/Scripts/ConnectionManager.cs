@@ -6,7 +6,11 @@ public class ConnectionHandler : MonoBehaviour
 {
     private void Awake()
     {
-        NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
+        // Only server/host should handle approval
+        if (NetworkManager.Singleton.IsServer)
+        {
+            NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
+        }
     }
 
     private void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request,
@@ -18,7 +22,6 @@ public class ConnectionHandler : MonoBehaviour
         {
             response.Approved = false;
             response.Reason = "Match already started";
-            // this is so fricking annoying to write haiya
             return;
         }
 

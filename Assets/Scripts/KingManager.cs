@@ -1,36 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class KingManager : NetworkBehaviour
 {
     public NetworkVariable<ulong> kingClientId = new NetworkVariable<ulong>();
-
+    bool initialized;
     private bool transferInProgress = false;
     private ulong pendingKingId;
+    private void Awake()
+    {
+        if (!NetworkManager.Singleton.IsServer) return;
+        if (initialized) return;
 
-    bool initKing;
+        kingClientId.Value = NetworkManager.Singleton.LocalClientId;
 
+        initialized = true;
+    }
     public override void OnNetworkSpawn()
     {
         if (IsServer)
         {
             Debug.Log("Server LocalClientId: " + NetworkManager.Singleton.LocalClientId);
             kingClientId.Value = NetworkManager.Singleton.LocalClientId; 
-        }
-    }
-
-    private void Awake()
-    {
-        NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnSceneLoaded;
-    }
-    private void OnDestroy()
-    {
-        if (NetworkManager.Singleton != null)
-        {
-            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= OnSceneLoaded;
         }
     }
     [Rpc(SendTo.Server)]
@@ -47,27 +39,11 @@ public class KingManager : NetworkBehaviour
 
     void Update()
     {
-
     }
     private IEnumerator TransferAfterDelay()
     {
         kingClientId.Value = pendingKingId;
         yield return new WaitForSeconds(1f);
         transferInProgress = false;
-    }
-    private void OnSceneLoaded(string sceneName, UnityEngine.SceneManagement.LoadSceneMode mode,
-        List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
-    {
-        if (!NetworkManager.Singleton.IsServer) return;
-
-        Debug.Log("Scene fully loaded on server: " + sceneName);
-
-        if (!initKing)
-        {
-            Debug.Log("Server LocalClientId: " + NetworkManager.Singleton.LocalClientId);
-            kingClientId.Value = NetworkManager.Singleton.LocalClientId;
-            initKing = true;
-        }
-
     }
 }

@@ -6,16 +6,22 @@ public class CrownShowMech : NetworkBehaviour
     private KingManager kingManager;
     void Start()
     {
-        KingManager kingManager = FindFirstObjectByType<KingManager>();
-
-
+        
     }
 
     void Update()
     {
-        if (kingManager == null) return;
 
-        if(OwnerClientId != kingManager.kingClientId.Value)
+        if (FindFirstObjectByType<KingManager>() != null)
+        {
+            kingManager = FindFirstObjectByType<KingManager>();
+        }
+        else
+        {
+            return;
+        }
+
+        if (OwnerClientId != kingManager.kingClientId.Value)
         {
             FindChildWithTag("Crown").GetComponent<SpriteRenderer>().enabled = false;
         }

@@ -44,21 +44,8 @@ public class KingManager : NetworkBehaviour
     }
     private IEnumerator TransferAfterDelay()
     {
-        //GetNetworkObject(kingClientId.Value).transform.Find("Head").position
-        GameObject obj = Instantiate(Particle, new Vector2(0,0), Quaternion.identity);
-
-        var ps = obj.GetComponent<ParticleSystem>();
-        var main = ps.main;
-
-        main.startColor = GetNetworkObject(kingClientId.Value)
-            .transform.Find("Head")
-            .GetComponent<SpriteRenderer>().color;
-
-        obj.GetComponent<NetworkObject>().Spawn();
 
         kingClientId.Value = pendingKingId;
-
-
         yield return new WaitForSeconds(1f);
         transferInProgress = false;
     }
@@ -73,6 +60,45 @@ public class KingManager : NetworkBehaviour
                 obj.ShakeClientRpc();
             }
         }
+    }
+    [Rpc(SendTo.Server)]
+    public void SpawnParticlesRpc(Vector2 Pos , Color col)
+    {
+        GameObject obj = Instantiate(Particle, Pos, Quaternion.identity);
+
+        var netObj = obj.GetComponent<NetworkObject>();
+
+        netObj.Spawn();
+
+        ApplyParticleColorClientRpc(netObj.NetworkObjectId, col);
+
+        StartCoroutine(DestroyObj(1, netObj));
+
+
+    }
+    public IEnumerator DestroyObj(float t,NetworkObject obj)
+    {
+        yield return new WaitForSeconds(t);
+        obj.Despawn();
+    }
+    [Rpc(SendTo.ClientsAndHost)]
+    void ApplyParticleColorClientRpc(ulong netObjectId, Color col)
+    {
+        StartCoroutine(ApplyWhenReady(netObjectId, col));
+    }
+
+    IEnumerator ApplyWhenReady(ulong netObjectId, Color col)
+    {
+        NetworkObject netObj;
+
+        while (!NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(netObjectId, out netObj))
+        {
+            yield return null;
+        }
+
+        var ps = netObj.GetComponent<ParticleSystem>();
+        var main = ps.main;
+        main.startColor = col;
     }
 
 }

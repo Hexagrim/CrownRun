@@ -1,9 +1,11 @@
+using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
-using System.Collections;
+using UnityEngine.UIElements;
 
 public class KingManager : NetworkBehaviour
 {
+    public GameObject Particle;
     public NetworkVariable<ulong> kingClientId = new NetworkVariable<ulong>();
     bool initialized;
     private bool transferInProgress = false;
@@ -33,7 +35,7 @@ public class KingManager : NetworkBehaviour
         if (newKingId == kingClientId.Value) return;
         transferInProgress = true;
         pendingKingId = newKingId;
-
+        ShakeAll();
         StartCoroutine(TransferAfterDelay());
     }
 
@@ -42,9 +44,35 @@ public class KingManager : NetworkBehaviour
     }
     private IEnumerator TransferAfterDelay()
     {
+        //GetNetworkObject(kingClientId.Value).transform.Find("Head").position
+        GameObject obj = Instantiate(Particle, new Vector2(0,0), Quaternion.identity);
+
+        var ps = obj.GetComponent<ParticleSystem>();
+        var main = ps.main;
+
+        main.startColor = GetNetworkObject(kingClientId.Value)
+            .transform.Find("Head")
+            .GetComponent<SpriteRenderer>().color;
+
+        obj.GetComponent<NetworkObject>().Spawn();
+
         kingClientId.Value = pendingKingId;
-        
+
+
         yield return new WaitForSeconds(1f);
         transferInProgress = false;
     }
+    public void ShakeAll()
+    {
+        if (!IsServer) return;
+
+        foreach (var obj in FindObjectsByType<CamShake>(FindObjectsSortMode.None))
+        {
+            if (obj.IsSpawned)
+            {
+                obj.ShakeClientRpc();
+            }
+        }
+    }
+
 }

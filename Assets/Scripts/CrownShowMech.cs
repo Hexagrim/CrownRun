@@ -6,7 +6,9 @@ public class CrownShowMech : NetworkBehaviour
     private KingManager kingManager;
     void Start()
     {
-        kingManager = FindFirstObjectByType<KingManager>();
+        KingManager kingManager = FindFirstObjectByType<KingManager>();
+
+
     }
 
     void Update()

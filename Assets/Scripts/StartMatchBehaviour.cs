@@ -46,6 +46,7 @@ public class StartMatchBehaviour : NetworkBehaviour
         
         started = true;
         yield return new WaitForSeconds(t);
+        FindFirstObjectByType<MatchManager>().StartMatch();
         NetworkManager.Singleton.SceneManager.LoadScene("Map1", LoadSceneMode.Single);
     }
 }

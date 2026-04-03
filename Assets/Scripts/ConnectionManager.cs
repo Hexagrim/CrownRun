@@ -14,7 +14,7 @@ public class ConnectionHandler : MonoBehaviour
     {
         if (!NetworkManager.Singleton.IsServer) return;
 
-        if(SceneManager.GetActiveScene().name != "Lobby" )
+        if(SceneManager.GetActiveScene().name != "Lobby" || FindFirstObjectByType<MatchManager>().MaxPlayers >= NetworkManager.Singleton.ConnectedClientsList.Count)
         {
             canJoin = false;
         }

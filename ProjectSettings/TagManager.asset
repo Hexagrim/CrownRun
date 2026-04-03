@@ -9,6 +9,8 @@ TagManager:
   - PlayerCol
   - Crown
   - Cam
+  - SpawnPoints
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX

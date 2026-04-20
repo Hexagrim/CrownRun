@@ -11,6 +11,10 @@ TagManager:
   - Cam
   - SpawnPoints
   - SpawnPoint
+  - Red
+  - Blue
+  - Yellow
+  - Green
   layers:
   - Default
   - TransparentFX

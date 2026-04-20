@@ -3,17 +3,10 @@ using Unity.Netcode;
 using UnityEngine;
 using System.Collections;
 
-public class CamShake : NetworkBehaviour
+public class CamShake : MonoBehaviour
 {
     public GameObject Vcam;
-
-    [Rpc(SendTo.ClientsAndHost)]
-    public void ShakeClientRpc()
-    {
-        Shake();
-    }
-
-    void Shake()
+    public void Shake()
     {
         StartCoroutine(ShakeCam(2f, 0.5f));
     }

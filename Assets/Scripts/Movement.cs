@@ -3,7 +3,7 @@ using Unity.Cinemachine;
 using Unity.Netcode;
 using UnityEngine;
 
-public class Movement : NetworkBehaviour
+public class Movement : MonoBehaviour
 {
     public GameObject leftLeg;
     public GameObject rightLeg;
@@ -22,23 +22,18 @@ public class Movement : NetworkBehaviour
     private GameObject Camera;
 
 
+    public KeyCode Right, Left, Jump;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {
-        
-    }
-    public override void OnNetworkSpawn()
     {
         Camera = FindFirstObjectByType<Camera>().gameObject;
         leftLegRB = leftLeg.GetComponent<Rigidbody2D>();
         rightLegRB = rightLeg.GetComponent<Rigidbody2D>();
 
-        if (!IsOwner)
-        {
-            FindChildWithTag("Indicator").gameObject.SetActive(false);
-            FindChildWithTag("Cam").gameObject.GetComponent<CinemachineCamera>().enabled = false;
-        }
+
     }
+
     Transform FindChildWithTag(string tag)
     {
         foreach (Transform t in GetComponentsInChildren<Transform>())
@@ -51,30 +46,27 @@ public class Movement : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!IsOwner)
-        {
-            return;
-        }
+
         isOnGround = Physics2D.OverlapCircle(playerPos.position, positionRadius, ground);
 
-        if(isOnGround && Input.GetKeyDown(KeyCode.Space))
+        if (isOnGround && Input.GetKeyDown(Jump))
         {
             Debug.Log("HEYAYAYYAAYAYA");
             rb.AddForce(Vector2.up * jumpForce);
         }
 
-        if(Input.GetAxisRaw("Horizontal") != 0)
+        if (Input.GetKey(Right))
         {
-            if(Input.GetAxisRaw("Horizontal") > 0)
-            {
-                Anim.Play("WalkRight");
-                StartCoroutine(MoveRight(stepWait));
-            }
-            else
-            {
-                Anim.Play("WalkLeft");
-                StartCoroutine(MoveLeft(stepWait));
-            }
+
+            Anim.Play("WalkRight");
+            StartCoroutine(MoveRight(stepWait));
+        }
+        else if (Input.GetKey(Left))
+        {
+
+            Anim.Play("WalkLeft");
+            StartCoroutine(MoveLeft(stepWait));
+
         }
         else
         {

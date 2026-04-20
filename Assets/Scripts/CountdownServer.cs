@@ -6,15 +6,10 @@ public class CountdownServer : NetworkBehaviour
     public NetworkVariable<float> duration = new NetworkVariable<float>();
     public NetworkVariable<double> startTime = new NetworkVariable<double>();
     public NetworkVariable<bool> isRunning = new NetworkVariable<bool>();
-
+    public bool started;
+    public bool finished;
     public override void OnNetworkSpawn()
     {
-        if (IsServer)
-        {
-            duration.Value = 0f;
-            startTime.Value = 0;
-            isRunning.Value = false;
-        }
     }
 
     public float GetRemainingTime()
@@ -34,11 +29,10 @@ public class CountdownServer : NetworkBehaviour
         return GetRemainingTime() <= 0f;
     }
 
-    [Rpc(SendTo.Server)]
     public void StartCountdownRpc(float newDuration)
     {
-        if (!IsServer) return;
 
+        started = true;
         duration.Value = newDuration;
         startTime.Value = NetworkManager.Singleton.ServerTime.Time;
         isRunning.Value = true;
@@ -47,10 +41,10 @@ public class CountdownServer : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void StopCountdownRpc()
     {
-        if (!IsServer) return;
 
+        started = false;
         float remaining = GetRemainingTime();
-
+        started = false;
         duration.Value = remaining;
         isRunning.Value = false;
     }
@@ -58,7 +52,6 @@ public class CountdownServer : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void AddTimeRpc(float extraTime)
     {
-        if (!IsServer) return;
 
         float remaining = GetRemainingTime();
 

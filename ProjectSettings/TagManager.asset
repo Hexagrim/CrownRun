@@ -49,10 +49,13 @@ TagManager:
     uniqueID: 0
     locked: 0
   - name: Outline
-    uniqueID: 3073484583
+    uniqueID: 1744106229
     locked: 0
   - name: Player
-    uniqueID: 1530424689
+    uniqueID: 36204197
+    locked: 0
+  - name: Ground
+    uniqueID: 175502419
     locked: 0
   m_RenderingLayers:
   - Default

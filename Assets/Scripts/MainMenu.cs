@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
     public string[] playTwoScenes, playThreeScenes, playFourScenes;
     void Start()
     {
-        
+        Time.timeScale = 1.0f;
     }
 
     

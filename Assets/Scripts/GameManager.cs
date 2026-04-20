@@ -3,6 +3,8 @@ using System.Collections;
 using TMPro;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using UnityEditor;
+using Unity.VisualScripting;
 public class GameManager : MonoBehaviour
 {
     public TMP_Text timer;
@@ -11,8 +13,13 @@ public class GameManager : MonoBehaviour
     public float time = 59;
     bool startTimer;
     public Animator T_Anim;
+    bool menu;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
+    {
+        Time.timeScale = 0f;
+    }
+    void Awake()
     {
         StartCoroutine(CountDown());
     }
@@ -23,7 +30,7 @@ public class GameManager : MonoBehaviour
     {
         if (startTimer == false) return;
         time -= Time.deltaTime;
-        timer.text = time.ToString();
+        timer.text = ((int)time).ToString();
         if(time <= 0f)
         {
             EndGame();
@@ -32,8 +39,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator CountDown()
     {
-        Time.timeScale = 0f;
-        yield return new WaitForSeconds(2.95f);
+        yield return new WaitForSecondsRealtime(0.25f);
+        yield return new WaitForSecondsRealtime(4f);
         Time.timeScale = 1.0f;
         startTimer = true;
     }
@@ -63,6 +70,7 @@ public class GameManager : MonoBehaviour
         }
 
         winnerText.enabled = true;
+        winScreen.SetTrigger("win");
         StartCoroutine(MainMenu());
 
 
@@ -87,9 +95,14 @@ public class GameManager : MonoBehaviour
 
     IEnumerator MainMenu()
     {
-        yield return new WaitForSeconds(3f);
-        T_Anim.SetTrigger("fade");
-        yield return new WaitForSeconds(0.25f);
-        SceneManager.LoadSceneAsync("MainMenu");
+        if (!menu)
+        {
+            menu = true;
+            yield return new WaitForSecondsRealtime(3f);
+            T_Anim.SetTrigger("fade");
+            yield return new WaitForSecondsRealtime(0.25f);
+            SceneManager.LoadSceneAsync("MainMenu");
+            Time.timeScale = 1.0f;
+        }
     }
 }

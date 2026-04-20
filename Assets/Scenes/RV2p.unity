@@ -1260,8 +1260,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 16777215
-  m_fontColor: {r: 1, g: 1, b: 1, a: 0}
+    rgba: 0
+  m_fontColor: {r: 0, g: 0, b: 0, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2673,10 +2673,10 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1162007724}
   - {fileID: 1957343141}
   - {fileID: 1623790556}
   - {fileID: 1145799876}
+  - {fileID: 1162007724}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5504,7 +5504,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: ce5eb827b6f2ac94b8a3b8b83f40c057, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -5564,7 +5564,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: e6f8be0fde4e2ca4395fbda4763ff9dd, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -9831,7 +9831,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: faccf02462fc9404495d393474aa5be1, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -9930,7 +9930,7 @@ Transform:
   m_GameObject: {fileID: 1959727770}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30.9, y: -5.5, z: 0}
+  m_LocalPosition: {x: 35.3, y: -5.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10221,11 +10221,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 134239892b4d01a479a08e60eaae2e7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  timer: {fileID: 0}
-  winScreen: {fileID: 0}
-  winnerText: {fileID: 0}
-  counterText: {fileID: 0}
-  time: 0
+  timer: {fileID: 1623790557}
+  winScreen: {fileID: 1145799879}
+  winnerText: {fileID: 1488121518}
+  time: 10
+  T_Anim: {fileID: 1162007725}
 --- !u!1 &18288089590751522
 GameObject:
   m_ObjectHideFlags: 0
@@ -13313,7 +13313,7 @@ Transform:
   m_GameObject: {fileID: 3167475251582307392}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -29.4, y: -5.2, z: 0}
+  m_LocalPosition: {x: -27.9, y: -5.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

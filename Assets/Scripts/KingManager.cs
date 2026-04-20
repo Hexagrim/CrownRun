@@ -7,7 +7,7 @@ public class KingManager : MonoBehaviour
     public GameObject Red, Green, Blue, Yellow;
     public GameObject king;
 
-    bool canTransfer;
+    bool canTransfer = true;
     void Start()
     {
         
@@ -22,8 +22,9 @@ public class KingManager : MonoBehaviour
     public void TransferKing(GameObject k)
     {
         if (!canTransfer) return;
-        StartCoroutine(Cooldown());
         king = k;
+        StartCoroutine(Cooldown());
+
 
     }
     IEnumerator Cooldown()

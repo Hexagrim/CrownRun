@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     bool startTimer;
     public Animator T_Anim;
     bool menu;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Start is called once before the first execution of Update after the MonoBehaviour is created 
     private void Start()
     {
         Time.timeScale = 0f;
@@ -30,8 +30,14 @@ public class GameManager : MonoBehaviour
     {
         if (startTimer == false) return;
         time -= Time.deltaTime;
-        timer.text = ((int)time).ToString();
-        if(time <= 0f)
+
+        int minutes = ((int)time) / 60;
+        int seconds = ((int)time) % 60;
+
+        timer.text = minutes.ToString("0") + ":" + seconds.ToString("00");
+
+
+        if (time <= 0f)
         {
             EndGame();
         }
@@ -105,4 +111,5 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1.0f;
         }
     }
+
 }

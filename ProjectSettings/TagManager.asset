@@ -15,6 +15,7 @@ TagManager:
   - Blue
   - Yellow
   - Green
+  - highJump
   layers:
   - Default
   - TransparentFX

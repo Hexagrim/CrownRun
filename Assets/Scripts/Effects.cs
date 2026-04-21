@@ -14,7 +14,7 @@ public class Effects : MonoBehaviour
     
     void Start()
     {
-        mov = GetComponent<Movement>();
+        mov = GetComponentInParent<Movement>();
     }
 
     // Update is called once per frame
@@ -28,7 +28,7 @@ public class Effects : MonoBehaviour
         highJumpEffect.SetActive(true);
         float normalForce = mov.jumpForce;
         mov.jumpForce = highJumpSpeed;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(10f);
         mov.jumpForce = normalForce;
         highJumpEffect.SetActive(false);
         HJ = false;

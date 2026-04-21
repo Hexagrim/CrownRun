@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class Effects : MonoBehaviour
 {
-    public bool isSheilded;
+    public bool isShielded;
     public float highJumpSpeed;
-    public GameObject highJumpEffect;
+    public GameObject highJumpEffect, shieldEffect;
     public GameObject kaboom;
 
     Movement mov;
@@ -33,7 +33,13 @@ public class Effects : MonoBehaviour
         highJumpEffect.SetActive(false);
         HJ = false;
     }
-
+    public IEnumerator Shield()
+    {
+        shieldEffect.SetActive(true);
+        yield return new WaitForSeconds(10f);
+        shieldEffect.SetActive(false);
+        isShielded = false;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("highJump"))
@@ -44,6 +50,16 @@ public class Effects : MonoBehaviour
                 Instantiate(kaboom, collision.transform.position, Quaternion.identity);
                 Destroy(collision.gameObject);
                 HJ = true;
+            }
+        }
+        if (collision.gameObject.CompareTag("highJump"))
+        {
+            if (!isShielded)
+            {
+                StartCoroutine(Shield());
+                Instantiate(kaboom, collision.transform.position, Quaternion.identity);
+                Destroy(collision.gameObject);
+                isShielded = true;
             }
         }
     }

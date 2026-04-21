@@ -4,20 +4,18 @@ using UnityEngine;
 public class Effects : MonoBehaviour
 {
     public bool isShielded;
-    public float highJumpSpeed;
-    public GameObject highJumpEffect, shieldEffect;
+    public float highJumpSpeed, boostedSpeed;
+    public GameObject highJumpEffect, shieldEffect, speedEffect;
     public GameObject kaboom;
 
     Movement mov;
 
     bool HJ;
-    
+    bool speed;
     void Start()
     {
         mov = GetComponentInParent<Movement>();
     }
-
-    // Update is called once per frame
     void Update()
     {
         
@@ -32,6 +30,16 @@ public class Effects : MonoBehaviour
         mov.jumpForce = normalForce;
         highJumpEffect.SetActive(false);
         HJ = false;
+    }
+    public IEnumerator Speed()
+    {
+        speedEffect.SetActive(true);
+        float normalForce = mov.speed;
+        mov.speed = boostedSpeed;
+        yield return new WaitForSeconds(10f);
+        mov.speed = normalForce;
+        speedEffect.SetActive(false);
+        speed = false;
     }
     public IEnumerator Shield()
     {
@@ -52,7 +60,7 @@ public class Effects : MonoBehaviour
                 HJ = true;
             }
         }
-        if (collision.gameObject.CompareTag("highJump"))
+        if (collision.gameObject.CompareTag("shield"))
         {
             if (!isShielded)
             {
@@ -60,6 +68,16 @@ public class Effects : MonoBehaviour
                 Instantiate(kaboom, collision.transform.position, Quaternion.identity);
                 Destroy(collision.gameObject);
                 isShielded = true;
+            }
+        }
+        if (collision.gameObject.CompareTag("speed"))
+        {
+            if (!speed)
+            {
+                StartCoroutine(Speed());
+                Instantiate(kaboom, collision.transform.position, Quaternion.identity);
+                Destroy(collision.gameObject);
+                speed = true;
             }
         }
     }

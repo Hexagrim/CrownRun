@@ -16,6 +16,8 @@ TagManager:
   - Yellow
   - Green
   - highJump
+  - shield
+  - speed
   layers:
   - Default
   - TransparentFX

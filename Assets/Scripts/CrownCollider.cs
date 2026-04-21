@@ -17,6 +17,13 @@ public class CrownCollider : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.GetComponentInParent<Effects>())
+        {
+            if(collision.GetComponentInParent<Effects>().isShielded)
+            {
+                return;
+            }
+        }
         if (collision.CompareTag("Red") && KM.king == KM.Red)
         {
             KM.TransferKing(obj);

@@ -12,7 +12,7 @@ public class Movement : MonoBehaviour
     public Rigidbody2D rb;
     public Animator Anim;
 
-    [SerializeField] float speed = 2f;
+    public float speed = 2f;
     [SerializeField] float stepWait = 0.5f;
     public float jumpForce;
     private bool isOnGround;

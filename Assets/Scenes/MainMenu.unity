@@ -2289,10 +2289,13 @@ MonoBehaviour:
   T_Anim: {fileID: 1615591786}
   playTwoScenes:
   - RV2p
+  - BC2p
   playThreeScenes:
-  - RV2p
+  - RV3p
+  - BC3p
   playFourScenes:
-  - RV2p
+  - RV4p
+  - BC4p
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
-using Unity.Cinemachine;
+using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class CameraBehaviour : MonoBehaviour
@@ -28,12 +29,27 @@ public class CameraBehaviour : MonoBehaviour
             bounds.Encapsulate(players[i].position);
         }
         transform.position = new Vector3(bounds.center.x, bounds.center.y, transform.position.z);
-        float aspect = 16/9;
+        float aspect = 16 / 9;
         float width = bounds.size.x + padding;
         float height = bounds.size.y + padding;
         float sizeFromWidth = width / aspect / 2f;
         float sizeFromHeight = height / 2f;
         float requiredSize = Mathf.Max(sizeFromWidth, sizeFromHeight);
         vcam.Lens.OrthographicSize = Mathf.Clamp(requiredSize, minZoom, maxZoom);
+    }
+    public void Shake()
+    {
+        StartCoroutine(ShakeCam(2f, 0.5f));
+    }
+    public IEnumerator ShakeCam(float intensity, float duration)
+    {
+        var noise = vcam.GetComponent<CinemachineBasicMultiChannelPerlin>();
+        noise.AmplitudeGain = intensity;
+        noise.FrequencyGain = intensity;
+
+        yield return new WaitForSeconds(duration);
+
+        noise.AmplitudeGain = 0f;
+        noise.FrequencyGain = 0f;
     }
 }

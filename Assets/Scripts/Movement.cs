@@ -21,68 +21,71 @@ public class Movement : MonoBehaviour
     public Transform playerPos;
     private GameObject Camera;
 
-
     public KeyCode Right, Left, Jump;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Camera = FindFirstObjectByType<Camera>().gameObject;
         leftLegRB = leftLeg.GetComponent<Rigidbody2D>();
         rightLegRB = rightLeg.GetComponent<Rigidbody2D>();
-
-
     }
 
-    Transform FindChildWithTag(string tag)
-    {
-        foreach (Transform t in GetComponentsInChildren<Transform>())
-        {
-            if (t.CompareTag(tag))
-                return t;
-        }
-        return null;
-    }
-    // Update is called once per frame
     void Update()
     {
-
         isOnGround = Physics2D.OverlapCircle(playerPos.position, positionRadius, ground);
 
         if (isOnGround && Input.GetKeyDown(Jump))
         {
-            Debug.Log("HEYAYAYYAAYAYA");
             rb.AddForce(Vector2.up * jumpForce);
         }
 
         if (Input.GetKey(Right))
         {
-
             Anim.Play("WalkRight");
             StartCoroutine(MoveRight(stepWait));
         }
         else if (Input.GetKey(Left))
         {
-
             Anim.Play("WalkLeft");
             StartCoroutine(MoveLeft(stepWait));
-
         }
         else
         {
             Anim.Play("Idle");
+
+            leftLegRB.linearVelocity *= 0.95f;
+            rightLegRB.linearVelocity *= 0.95f;
+            rb.linearVelocity *= 0.95f;
         }
     }
+
     IEnumerator MoveRight(float seconds)
     {
-        leftLegRB.AddForce(Vector2.right * (speed * 1000) * Time.deltaTime);
+        float force = speed * 1000;
+        if (leftLegRB.linearVelocity.x <= 0) force *= 3f;
+        if (rightLegRB.linearVelocity.x <= 0) force *= 3f;
+
+        leftLegRB.AddForce(Vector2.right * force * Time.deltaTime);
         yield return new WaitForSeconds(seconds);
-        rightLegRB.AddForce(Vector2.right * (speed * 1000) * Time.deltaTime);
+
+        force = speed * 1000;
+        if (rightLegRB.linearVelocity.x <= 0) force *= 2.5f;
+
+        rightLegRB.AddForce(Vector2.right * force * Time.deltaTime);
     }
+
     IEnumerator MoveLeft(float seconds)
     {
-        rightLegRB.AddForce(Vector2.left * (speed * 1000) * Time.deltaTime);
+        float force = speed * 1000;
+        if (rightLegRB.linearVelocity.x >= 0) force *= 3f;
+        if (leftLegRB.linearVelocity.x >= 0) force *= 3f;
+
+        rightLegRB.AddForce(Vector2.left * force * Time.deltaTime);
         yield return new WaitForSeconds(seconds);
-        leftLegRB.AddForce(Vector2.left * (speed * 1000) * Time.deltaTime);
+
+        force = speed * 1000;
+        if (leftLegRB.linearVelocity.x >= 0) force *= 2.5f;
+
+        leftLegRB.AddForce(Vector2.left * force * Time.deltaTime);
     }
 }

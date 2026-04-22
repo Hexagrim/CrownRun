@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
     }
     void EndGame()
     {
+        FindFirstObjectByType<CameraBehaviour>().Shake();
         StartCoroutine(LerpTimeScale(0f,0.2f));
         KingManager km = FindFirstObjectByType<KingManager>();
         if(km.king == km.Red)

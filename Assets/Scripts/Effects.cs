@@ -54,6 +54,7 @@ public class Effects : MonoBehaviour
         {
             if (!HJ)
             {
+                FindFirstObjectByType<CameraBehaviour>().Shake();
                 StartCoroutine(HighJump());
                 Instantiate(kaboom, collision.transform.position, Quaternion.identity);
                 Destroy(collision.gameObject);
@@ -64,6 +65,7 @@ public class Effects : MonoBehaviour
         {
             if (!isShielded)
             {
+                FindFirstObjectByType<CameraBehaviour>().Shake();
                 StartCoroutine(Shield());
                 Instantiate(kaboom, collision.transform.position, Quaternion.identity);
                 Destroy(collision.gameObject);
@@ -74,6 +76,7 @@ public class Effects : MonoBehaviour
         {
             if (!speed)
             {
+                FindFirstObjectByType<CameraBehaviour>().Shake();
                 StartCoroutine(Speed());
                 Instantiate(kaboom, collision.transform.position, Quaternion.identity);
                 Destroy(collision.gameObject);

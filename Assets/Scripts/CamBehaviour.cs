@@ -39,7 +39,11 @@ public class CameraBehaviour : MonoBehaviour
     }
     public void Shake()
     {
-        StartCoroutine(ShakeCam(2f, 0.5f));
+        StartCoroutine(ShakeCam(10f, 0.4f));
+    }
+    public void ShakeLow()
+    {
+        StartCoroutine(ShakeCam(2f, 0.4f));
     }
     public IEnumerator ShakeCam(float intensity, float duration)
     {
@@ -52,4 +56,4 @@ public class CameraBehaviour : MonoBehaviour
         noise.AmplitudeGain = 0f;
         noise.FrequencyGain = 0f;
     }
-}
+}//HMM why are you reading tis lol

@@ -36,6 +36,7 @@ public class Movement : MonoBehaviour
 
         if (isOnGround && Input.GetKeyDown(Jump))
         {
+            FindFirstObjectByType<CameraBehaviour>().ShakeLow();
             rb.AddForce(Vector2.up * jumpForce);
         }
 
@@ -56,6 +57,15 @@ public class Movement : MonoBehaviour
             leftLegRB.linearVelocity *= 0.95f;
             rightLegRB.linearVelocity *= 0.95f;
             rb.linearVelocity *= 0.95f;
+        }
+
+        if(rb.linearVelocityY <0f)
+        {
+            rb.gravityScale = 3f;
+        }
+        else
+        {
+            rb.gravityScale = 1.5f;
         }
     }
 

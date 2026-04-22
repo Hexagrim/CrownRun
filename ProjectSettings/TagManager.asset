@@ -18,6 +18,7 @@ TagManager:
   - highJump
   - shield
   - speed
+  - teleport
   layers:
   - Default
   - TransparentFX
